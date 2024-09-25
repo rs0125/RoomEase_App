@@ -11,12 +11,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -44,6 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.testtest.ui.theme.TesttestTheme
+import kotlin.math.round
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TesttestTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Ticket(
+                    HomePage(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -382,7 +385,8 @@ fun ProfileScreen(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun Ticket(name: String, modifier: Modifier = Modifier) {
     Card (
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
             .fillMaxWidth(),
                 colors = CardDefaults.cardColors(
                 containerColor = Color(0xFF28262B),
@@ -408,6 +412,87 @@ fun Ticket(name: String, modifier: Modifier = Modifier) {
             modifier = Modifier.padding(8.dp, bottom = 16.dp),
             color = Color(0xFFEFC176)
         )
+    }
+
+}
+
+@Composable
+fun HomePage(name: String, modifier: Modifier = Modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxSize()
+
+    ) {
+        Text(
+            text = "Good Morning",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(16.dp)
+        )
+
+        Column (
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    shape = RoundedCornerShape(16.dp), color = Color(0xFFEFC176)
+                )
+                .padding(16.dp)
+
+        ){
+            Text(text = "Ticket Raised For",
+                color = Color(0xFF28262B),
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(top = 12.dp))
+            Text(text = "18/9/24",
+                color = Color(0xFF28262B),
+                fontSize = 40.sp,
+                fontWeight = FontWeight(600),
+                 modifier = Modifier.padding(bottom = 16.dp)
+            )
+        }
+
+        Text(text = "Raise New Ticket",
+            style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(16.dp))
+
+        Column () {
+            Row (modifier = Modifier.padding(2.dp)){
+                icon(type = "Cleaning", imageId = R.drawable.clean)
+                icon(type= "Electrical",imageId = R.drawable.elec)
+            }
+            Row (modifier = Modifier.padding(2.dp)){
+                icon(type = "Plumbing" , imageId = R.drawable.plum)
+                icon(type= "AC", imageId = R.drawable.ac)
+            }
+        }
+
+
+    }
+}
+
+@Composable
+fun icon(type: String, imageId : Int) {
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .size(160.dp)
+            .background(
+                shape = RoundedCornerShape(16.dp), color = Color(0xFF28262B)
+            ),
+        contentAlignment = Alignment.BottomCenter
+    ){
+        Image(
+            painter = painterResource(id = imageId),
+            contentDescription = "Local Image",
+            modifier = Modifier.size(120.dp)
+                .padding(bottom = 70.dp)
+        )
+        Text(text = type,
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.headlineSmall)
     }
 
 }
